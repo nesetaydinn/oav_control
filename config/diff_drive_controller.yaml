@@ -1,0 +1,44 @@
+mobile_base_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  publish_rate: 50.0
+
+  left_wheel: rNESH/left_wheel_joint
+  right_wheel: rNESH/right_wheel_joint
+
+  #pose_covariance_diagonal: [0.04, 0.04, 0.04, 0.04, 0.04, 0.6]
+  #twist_covariance_diagonal: [0.04, 0.04, 0.04, 0.04, 0.04, 0.6]
+  pose_covariance_diagonal: [ 0.001, 0.001, 0.001, 0.001, 0.001, 0.01 ]
+  twist_covariance_diagonal: [ 0.001, 0.001, 0.001, 0.001, 0.001, 0.01 ]
+
+  cmd_vel_timeout: 0.5
+
+  base_frame_id: rNESH/base_footprint #default: base_link
+  odom_frame_id: rNESH/odom
+
+  enable_odom_tf: true
+  publish_cmd: true
+
+  open_loop: false
+
+  # Velocity and acceleration limits
+  # Whenever a min_* is unspecified, default to -max_*
+  linear:
+      x:
+        has_velocity_limits    : true
+        max_velocity           : 0.7   # m/s
+        min_velocity           : -0.05   # m/s
+        has_acceleration_limits: true
+        max_acceleration       : 0.8   # m/s^2
+        min_acceleration       : -0.4   # m/s^2
+        has_jerk_limits        : false
+        max_jerk               : 5.0 # m/s^3
+  angular:
+      z:
+        has_velocity_limits    : true
+        max_velocity           : !degrees 120.0   # rad/s
+        has_acceleration_limits: true
+        max_acceleration       : !degrees 120.0   # rad/s^2
+        has_jerk_limits        : false
+        max_jerk               : 10.0 # rad/s^3
+
+
