@@ -21,9 +21,9 @@ OavController::OavController(ros::NodeHandle &nh,ros::NodeHandle &priv_nh):
     published_cmd_pub_=priv_nh_.advertise<geometry_msgs::TwistStamped>("/" + robot_id_ + "/" + published_cmd_topic_, 1);
 
     /* Timers */
-    odom_pub_timer_= nh.createTimer(ros::Duration(FREQ_TO_PER(ODOM_PUB_FREQ_)),&OavController::odomPubTimerCallback);
-    tf_pub_timer_= nh.createTimer(ros::Duration(FREQ_TO_PER(TF_PUB_FREQ_)),&OavController::odomPubTimerCallback);
-    published_cmd_pub_timer_= nh.createTimer(ros::Duration(FREQ_TO_PER(PUBLISHED_CMD_PUB_FREQ_)),&OavController::odomPubTimerCallback);
+    odom_pub_timer_= ros::Timer( priv_nh_.createTimer(ros::Duration(FREQ_TO_PER(ODOM_PUB_FREQ_)),&OavController::odomPubTimerCallback,this));
+    tf_pub_timer_=  ros::Timer(priv_nh_.createTimer(ros::Duration(FREQ_TO_PER(TF_PUB_FREQ_)),&OavController::tfPubTimerCallback,this));
+    published_cmd_pub_timer_=  ros::Timer(priv_nh_.createTimer(ros::Duration(FREQ_TO_PER(PUBLISHED_CMD_PUB_FREQ_)),&OavController::publishedCmdPubTimerCallback,this));
 }
 
 /* Subscribers Feedback */
@@ -44,15 +44,15 @@ void OavController::cmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg){
 
 /* Timer Feedback */
 void OavController::odomPubTimerCallback(const ros::TimerEvent &event){
-    OavController::odomPublisher();
+  //  OavController::odomPublisher();
 }
 
 void OavController::tfPubTimerCallback(const ros::TimerEvent &event){
-    OavController::tfPublisher();
+//    OavController::tfPublisher();
 }
 
 void OavController::publishedCmdPubTimerCallback(const ros::TimerEvent &event){
-    OavController::publishedCmdPublisher();
+  //  OavController::publishedCmdPublisher();
 }
 
 /* Publishers Functions */
